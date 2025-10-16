@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Kilometers ↔ Miles Conversion</h2>
+  <p>This simple JavaScript program converts between kilometers and miles using conditional statements.</p>
+
+  <script>
+    // Program Purpose:
+    // This program asks the user to choose between converting kilometers to miles
+    // or miles to kilometers, then performs the correct calculation using if/else logic.
+
+    // Ask user for conversion type
+    let choice = prompt("Type 'K' to convert kilometers to miles, or 'M' to convert miles to kilometers:");
+
+    // Check user input
+    if (choice === "K" || choice === "k") {
+      let kilometers = prompt("Enter the number of kilometers:");
+      let miles = kilometers * 0.621371;
+      alert(kilometers + " kilometers is equal to " + miles.toFixed(2) + " miles.");
+    } 
+    else if (choice === "M" || choice === "m") {
+      let miles = prompt("Enter the number of miles:");
+      let kilometers = miles / 0.621371;
+      alert(miles + " miles is equal to " + kilometers.toFixed(2) + " kilometers.");
+    } 
+    else {
+      alert("Invalid choice! Please type 'K' or 'M'.");
+    }
+  </script>
+</body>
+</html>
