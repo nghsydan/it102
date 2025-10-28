@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Grocery List</title>
+</head>
+<body>
+  <h2>Grocery List</h2>
+  Enter grocery items separated by commas.
+  <br>
+  <textarea id="groceryInput" placeholder='Enter grocery items and separate with comma "," when finished.'></textarea>
+  <br>
+  <button onclick="createGroceryList()">Create Grocery List</button>
+  <p id="groceryList"></p>
+  <p>Total items: <span id="totalItems"></span></p>
+
+<script>
+function createGroceryList() {
+  var userInput = document.getElementById("groceryInput").value;
+
+  // Check for empty input from user
+  if (userInput.trim() === "") {
+    alert("Enter grocery item.");
+    return;
+  }
+
+  // Split input string into array
+  var groceryItems = userInput.split(",");
+
+  // Trim white space from each items by looping through array
+  for (var i = 0; i < groceryItems.length; i++) {
+    groceryItems[i] = groceryItems[i].trim();
+  }
+
+  // Sort groceryItems alphabetically
+  groceryItems.sort();
+
+  // Display grocery list to webpage
+  document.getElementById("groceryList").innerHTML = groceryItems.join("<br>");
+
+  // Display total number of items
+  document.getElementById("totalItems").textContent = groceryItems.length;
+}
+</script>
+</body>
+</html>
