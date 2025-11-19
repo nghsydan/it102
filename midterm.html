@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>BAS Application Development Eligibility Checker</title>
+</head>
+<body>
+
+<h1>BAS Application Development Eligibility Checker</h1>
+<p>Enter your most recent or highest math course to check if you meet the BAS math requirement.</p>
+
+<form id="mathForm" onsubmit="main(); return false;">
+  <label for="courseInput">Math Course:</label>
+  <input type="text" id="courseInput" placeholder="MATH081">
+  <button type="submit">Check Eligibility</button>
+</form>
+
+<div id="result" style="margin-top: 12px;"></div>
+
+<script>
+
+
+// Math database
+
+
+var allMathCourses = {
+  MATH080: { name: "Preparatory Math", qualifies: false, next: "MATH098", nextName: "Intermediate Algebra" },
+  MATH081: { name: "Basic Math", qualifies: false, next: "MATH084", nextName: "Algebra I" },
+  MATH084: { name: "Algebra I", qualifies: false, next: "MATH085", nextName: "Algebra II" },
+  MATH085: { name: "Algebra II", qualifies: false, next: "MATH097", nextName: "Elementary Algebra" },
+  MATH097: { name: "Elementary Algebra", qualifies: false, next: "MATH098", nextName: "Intermediate Algebra" },
+  MATH098: { name: "Intermediate Algebra", qualifies: false, next: "MATH141", nextName: "Precalculus I" },
+  MATH099: { name: "Essentials of Intermediate Algebra", qualifies: false, next: "MATH141", nextName: "Precalculus I" },
+  MATH107: { name: "Math in Society", qualifies: false, next: "MATH146", nextName: "Elementary Statistics" },
+  MATH116: { name: "Applications of Math", qualifies: false, next: "MATH141", nextName: "Precalculus I" },
+  MATH141: { name: "Precalculus I", qualifies: false, next: "MATH142", nextName: "Precalculus II" },
+  MATH142: { name: "Precalculus II", qualifies: false, next: "MATH151", nextName: "Calculus I" },
+  MATH146: { name: "Elementary Statistics", qualifies: true, next: "", nextName: "" },
+  MATH148: { name: "Business Calculus", qualifies: false, next: "MATH211", nextName: "Statistical Methods" },
+  MATH151: { name: "Calculus I", qualifies: true, next: "MATH152", nextName: "Calculus II" },
+  MATH152: { name: "Calculus II", qualifies: true, next: "MATH163", nextName: "Calculus III" },
+  MATH163: { name: "Calculus III", qualifies: true, next: "MATH220", nextName: "Linear Algebra" },
+  MATH211: { name: "Statistical Methods", qualifies: true, next: "", nextName: "" },
+  MATH220: { name: "Linear Algebra", qualifies: true, next: "MATH224", nextName: "Vector Calculus" },
+  MATH224: { name: "Vector Calculus", qualifies: true, next: "MATH238", nextName: "Differential Equations" },
+  MATH238: { name: "Differential Equations", qualifies: true, next: "", nextName: "" }
+};
+
+
+// MAIN FUNCTION
+function main() {
+  var course = getCourseNumber();
+
+  if (course === null) {
+    document.getElementById("result").innerHTML =
+      "Please enter a valid NSC math course (e.g., MATH097 or MATH151).";
+    return;
+  }
+
+  var results = checkEligibility(course);
+  displayResults(results);
+}
+
+
+// Get / validate input
+
+
+function getCourseNumber() {
+  var input = document.getElementById("courseInput").value;
+
+  if (!input || input.trim() === "") return null;
+
+  var cleaned = input.toUpperCase().trim().replace(/\s+/g, "");
+
+  if (allMathCourses.hasOwnProperty(cleaned)) {
+    return cleaned;
+  } else {
+    return null;
+  }
+}
+
+
+// Eligibility check
+
+function checkEligibility(course) {
+  var obj = allMathCourses[course];
+
+  return {
+    code: course,
+    name: obj.name,
+    meets: obj.qualifies,
+    next: obj.next,
+    nextName: obj.nextName
+  };
+}
+
+
+// Display result EXACTLY like examples
+
+function displayResults(r) {
+  var resultDiv = document.getElementById("result");
+  var msg = "";
+
+  if (r.meets === true) {
+    msg = "Congratulations! You’ve met the math requirement for the BAS in Application Development.";
+  } else {
+    msg = "You do not yet meet the BAS math requirement. You should next consider taking "
+        + r.next + " (" + r.nextName + ").";
+  }
+
+  resultDiv.innerHTML = msg;
+}
+
+</script>
+
+</body>
+</html>
