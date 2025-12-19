@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p id="demo"></p>
+
+<script>
+  function Truck(gas, mpg) {
+    this.gas = gas;
+
+    // ADDED: store mpg as a property on the object (required property)
+    this.mpg = mpg;
+
+    // ADDED: range property (required). range = gas * mpg
+    this.range = this.gas * this.mpg;
+
+    // ADDED: empty boolean property (required). Default false; set true if gas <= 0
+    this.empty = false;
+
+    this.drive = function (miles) {
+      this.gas -= miles/this.mpg;
+
+      // ADDED: update range after driving so object stays consistent
+      this.range = this.gas * this.mpg;
+
+      if(this.gas <=0) {
+        this.empty = true;
+      }
+    };
+
+    this.fill = function (gallons){
+      // ADDED: increase gas by gallons (required: fill() updates gas)
+      this.gas += gallons;
+
+      // ADDED: update range after filling (range = gas * mpg)
+      this.range = this.gas * this.mpg;
+
+      // ADDED: update empty flag (required: fill() updates empty)
+      if (this.gas > 0) {
+        this.empty = false;
+      } else {
+        this.empty = true;
+      }
+    };
+
+    // Sets empty to true if no gas
+    if (this.gas <= 0){
+      // ADDED: ensures empty is correctly set when gas is 0 or less
+      this.empty = true;
+    };
+
+  }
+
+  //test code
+
+  test= new Truck(20, 15);
+
+  alert ("The range is: " + test.range); //expected output = a positive number
+  test.drive(300);
+  alert ("Empty after the drive? " + test.empty); //expected output = true
+  test.fill(10);
+  alert ("Empty after the fill? " + test.empty); //expected output = false
+
+</script>
+
+</body>
+</html>
